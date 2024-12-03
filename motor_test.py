@@ -45,9 +45,7 @@ if __name__ == "__main__":
             robot.motor_right.set_rpm(1000)
             robot.motor_front.set_rpm(1000)
             # time.sleep(0.0001)
-
     except Exception as e:
         assert False, e
-
     finally:
         del _can_py

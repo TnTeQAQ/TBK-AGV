@@ -92,7 +92,6 @@ class CAN_PY:
     # init default: socketcan(mcp2515)
     def __init__(self, _interface="canalystii", _channel=(0), _bitrate=500000):
         # def __init__(self, _interface='socketcan', _channel='can0', _bitrate=500000):
-
         self.os_can_open()
         self.bus = can.ThreadSafeBus(
             interface=_interface,
@@ -115,9 +114,7 @@ class CAN_PY:
         pass
 
     def send(self, id, data):
-
         message = can.Message(arbitration_id=id, is_extended_id=True, data=data)
-
         self.bus.send(message, timeout=0.2)
 
     def send_can_msg(self, msg):
@@ -137,19 +134,15 @@ class CAN_PY:
     def send_rpm(self, _id: np.uint8, _rpm: float):
         # Ensure id is handled with a larger integer type to avoid overflow
         id = int(_id) + 0x300
-
         # Initialize data array
         data = [0, 0, 0, 0, 0, 0, 0, 0]
-
         # Convert RPM to a 32-bit integer
         rpm_int = np.int32(int(_rpm))
-
         # Pack the RPM into the data array
         data[0] = (rpm_int >> 24) & 0xFF
         data[1] = (rpm_int >> 16) & 0xFF
         data[2] = (rpm_int >> 8) & 0xFF
         data[3] = rpm_int & 0xFF
-
         # Send the id and data
         # print(id, data)
         self.send(id, data)
