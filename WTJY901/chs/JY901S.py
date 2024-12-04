@@ -21,9 +21,11 @@ class JY901S:
         self.JY901_DATA["gyro"] = [self.device.getDeviceData("gyroX"),self.device.getDeviceData("gyroY"),self.device.getDeviceData("gyroZ")]
         self.JY901_DATA["angle"] = [self.device.getDeviceData("angleX"),self.device.getDeviceData("angleY"),self.device.getDeviceData("angleZ")]
 
+        self.JY901_DATA["angle"] = [x if x is not None else 0 for x in self.JY901_DATA["angle"]]
+        
         self.JY901_DATA["angle"] = [i/180*pi for i in self.JY901_DATA["angle"]]
         self.JY901_DATA["angle"][1] = -self.JY901_DATA["angle"][1]
-        self.JY901_DATA["quat"] = la.quat_from_euler(self.JY901_DATA["angle"],order="YXZ")
+        self.JY901_DATA["quat"] = la.quat_from_euler(self.JY901_DATA["angle"],order="YXZ").tolist()
         return self.JY901_DATA
     
 jy901s = JY901S("/dev/ttyS0")

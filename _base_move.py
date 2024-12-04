@@ -80,6 +80,7 @@ class MotorMsg:
     def read_agv_msg(self):
         self.motor_msg = self.read_motor_msg()
         self.imu_msg = self.read_imu_msg()
+        print(self.imu_msg)
         self.agv_msg = {
             "motor": self.motor_msg,
             "imu": self.imu_msg,
