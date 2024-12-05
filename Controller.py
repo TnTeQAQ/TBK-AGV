@@ -7,6 +7,9 @@ import time
 import pickle
 import threading
 
+tbkpy.init("AGV2")
+
+
 
 class Controller:
     def __init__(self) -> None:
@@ -64,10 +67,10 @@ class Controller:
                 self.subscriber[i] = tbkpy.Subscriber(
                     sub_info["name"],
                     sub_info["msg_name"],
-                    lambda msg: self.set_speed(msg, i),
-                    print,
+                    lambda msg, can_id=i: self.set_speed(msg, can_id)
                 )
-
+                
+                
     def flash_publisher(self):
         if self.publisher is None:
             can_info = tbkpy.EPInfo()
@@ -96,6 +99,10 @@ class Controller:
         #         # time.sleep(0.02)
         # except Exception as e:
         #     print(e)
+
+    
+
+
 
 
 if __name__ == "__main__":
